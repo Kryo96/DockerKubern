@@ -38,3 +38,28 @@ Come si può notare per ogni applicazione, non è necessario avere un OS sotto c
 |                          | Stai gestendo applicazioni legacy che non possono essere facilmente containerizzate.                          | Hai bisogno di scalare rapidamente ed efficientemente le tue applicazioni.            |
 |                          | Vuoi replicare un ambiente di sistema completo per test o sviluppo.                                           | La portabilità tra ambienti diversi è una priorità assoluta.                          |
 
+
+#### Docker Components 
+
+![](/Screenshot_3.png)
+
+Come da immagine si possono vedere le parti di un sistema basato su Docker
+1. Docker Client è l'interfaccia utente che tramite dei comandi, fa chiamate API verso il docker Host che le elabora
+2. Docker host si occupa di gestire le chiamate e le risorse
+3. Image registry è dove vengono salvate le immagini create dalle build delle applicazioni pronte ad essere scaricate
+
+###### Ma come comunicano tra di loro ? 
+
+1. viene lanciato ```docker run``` nella CLI
+2. CLI manda una request all'host REST API
+3. Docker Host controlla se l'immagine è presente nelle cache locali
+4. se non lo è la scarica dall'image registry
+5. Docker Host inizializza un nuovo container basato sull'immagine
+
+###### Come invece pushare un immagine? 
+
+1. viene lanciato ```docker build``` nella CLI
+2. CLI lancia una request all' host REST API
+3. Docker host costruisce l'immagine secondo il Dockerfile (mandato nel punto 2)
+4. Docker Host tagga l'immagine e la stora localmente
+5. viene lanciato ```docker push``` nella CLI ( per le image registry private bisogna essere autenticati per poterlo fare)
